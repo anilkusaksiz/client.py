@@ -51,7 +51,8 @@ from deebot_client.commands.json.life_span import GetLifeSpan, ResetLifeSpan
 from deebot_client.commands.json.map import (
     GetCachedMapInfo,
     GetMajorMap,
-    GetMapSet,
+    GetMapInfoV2,
+    GetMapSetV2,
     GetMapTrace,
     GetMinorMap,
     SetMajorMap,
@@ -193,6 +194,7 @@ def get_device_info() -> StaticDeviceInfo:
                     [GetCachedMapInfo()],
                 ),
                 changed=CapabilityEvent(MapChangedEvent, []),
+                info=CapabilityExecute(GetMapInfoV2),
                 major=CapabilitySet(
                     MajorMapEvent,
                     [GetMajorMap()],
@@ -204,14 +206,20 @@ def get_device_info() -> StaticDeviceInfo:
                     [GetMultimapState()],
                     SetMultimapState,
                 ),
-                position=CapabilityEvent(PositionsEvent, [GetPos()]),
+                position=CapabilityEvent(
+                    PositionsEvent,
+                    [GetPos()],
+                ),
                 relocation=CapabilityExecute(SetRelocationState),
                 rooms=CapabilityEvent(
                     RoomsEvent,
                     [GetCachedMapInfo()],
                 ),
-                set=CapabilityExecute(GetMapSet),
-                trace=CapabilityEvent(MapTraceEvent, [GetMapTrace()]),
+                set=CapabilityExecute(GetMapSetV2),
+                trace=CapabilityEvent(
+                    MapTraceEvent,
+                    [GetMapTrace()],
+                ),
             ),
             network=CapabilityEvent(NetworkInfoEvent, [GetNetInfo()]),
             play_sound=CapabilityExecute(PlaySound),
