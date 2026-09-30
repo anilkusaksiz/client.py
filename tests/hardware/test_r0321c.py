@@ -21,7 +21,7 @@ def test_r0321c_uses_v2_capabilities() -> None:
     assert capabilities.state.get == [
         GetChargeState(),
         GetCleanInfo(),
-]
+    ]
     assert capabilities.station is not None
     assert capabilities.station.state.get == [GetWorkState()]
     assert capabilities.station.action.types == (
